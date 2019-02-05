@@ -2,20 +2,14 @@ package vendingmachine;
 
 public enum Beverage {
 
-    WATER("Water", 10),
-    COKE("Coke", 25),
-    BEER("Beer", 45);
+    WATER(10),
+    COKE(25),
+    BEER(45);
 
-    private final String name;
     private final int price;
 
-    Beverage(String name, int price) {
-        this.name = name;
+    Beverage(int price) {
         this.price = price;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public int getPrice() {

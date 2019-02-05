@@ -13,16 +13,16 @@ class Inventory<T> {
         contents.put(item, count + 1);
     }
 
-    int getNumberOfItems(T item) {
-        Integer numberOfItems = contents.get(item);
-        return numberOfItems != null ? numberOfItems : 0;
-    }
-
     void subtractItem(T item) {
         if (hasItemInStock(item)) {
             Integer count = contents.get(item);
             contents.put(item, count - 1);
         }
+    }
+
+    int getNumberOfItems(T item) {
+        Integer numberOfItems = contents.get(item);
+        return numberOfItems != null ? numberOfItems : 0;
     }
 
     boolean hasItemInStock(T item) {

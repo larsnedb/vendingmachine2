@@ -5,38 +5,20 @@ import java.util.List;
 
 public class BeverageMachine implements VendingMachine {
 
-    private State state;
     private Beverage selectedBeverage;
     private int balance;
     private Inventory<Beverage> inventory;
 
     BeverageMachine() {
-        state = State.IDLE;
         inventory = new Inventory<>();
     }
 
-    @Override
-    public State getState() {
-        return state;
-    }
-
-    void setState(State state) {
-        this.state = state;
-    }
-
-    @Override
-    public Beverage getSelectedBeverage() {
+    Beverage getSelectedBeverage() {
         return selectedBeverage;
     }
 
-    @Override
-    public int getBalance() {
+    int getBalance() {
         return balance;
-    }
-
-    @Override
-    public Inventory<Beverage> getInventory() {
-        return inventory;
     }
 
     @Override
@@ -45,15 +27,11 @@ public class BeverageMachine implements VendingMachine {
     }
 
     @Override
-    public void reset() {
-        state = State.IDLE;
-        selectedBeverage = null;
-        balance = 0;
-        inventory.clear();
+    public Inventory<Beverage> getInventory() {
+        return inventory;
     }
 
-    @Override
-    public void chooseBeverage(Beverage beverage) {
+    void setSelectedBeverage(Beverage beverage) {
         selectedBeverage = beverage;
     }
 
@@ -72,7 +50,14 @@ public class BeverageMachine implements VendingMachine {
     }
 
     @Override
-    public List<Coin> cancel() {
+    public void reset() {
+        selectedBeverage = null;
+        balance = 0;
+        inventory.clear();
+    }
+
+    @Override
+    public List<Coin> cancelTransaction() {
         return computeChange();
     }
 
@@ -82,16 +67,13 @@ public class BeverageMachine implements VendingMachine {
             if (balance >= 20) {
                 coins.add(Coin.TWENTY);
                 balance -= 20;
-            }
-            else if (balance >= 10) {
+            } else if (balance >= 10) {
                 coins.add(Coin.TEN);
                 balance -= 10;
-            }
-            else if (balance >= 5) {
+            } else if (balance >= 5) {
                 coins.add(Coin.FIVE);
                 balance -= 5;
-            }
-            else {
+            } else {
                 coins.add(Coin.ONE);
                 balance -= 1;
             }
