@@ -16,12 +16,12 @@ public class BeverageMachine implements VendingMachine {
 
     @Override
     public Beverage getSelectedBeverage() {
-        return null;
+        return selectedBeverage;
     }
 
     @Override
     public int getBalance() {
-        return 0;
+        return balance;
     }
 
     @Override
@@ -30,8 +30,8 @@ public class BeverageMachine implements VendingMachine {
     }
 
     @Override
-    public void insertCoin() {
-
+    public void insertCoin(Coin coin) {
+        balance += coin.getValue();
     }
 
     @Override
@@ -42,5 +42,10 @@ public class BeverageMachine implements VendingMachine {
     @Override
     public void reset() {
 
+    }
+
+    @Override
+    public void chooseBeverage(Beverage beverage) {
+        selectedBeverage = beverage;
     }
 }

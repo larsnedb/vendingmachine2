@@ -6,7 +6,7 @@ public interface VendingMachine {
 
     State getState();
 
-    void insertCoin();
+    void insertCoin(Coin coin);
 
     int getBalance();
 
@@ -17,4 +17,6 @@ public interface VendingMachine {
     List<Coin> returnChange();
 
     void reset();
+
+    void chooseBeverage(Beverage beverage);
 }
