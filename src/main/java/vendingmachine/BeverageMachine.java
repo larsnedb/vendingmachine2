@@ -1,5 +1,7 @@
 package vendingmachine;
 
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class BeverageMachine implements VendingMachine {
@@ -40,11 +42,6 @@ public class BeverageMachine implements VendingMachine {
     }
 
     @Override
-    public List<Coin> returnChange() {
-        return null;
-    }
-
-    @Override
     public void reset() {
 
     }
@@ -55,16 +52,39 @@ public class BeverageMachine implements VendingMachine {
     }
 
     @Override
-    public int completePurchase() {
+    public List<Coin> completePurchaseAndComputeChange() {
         if (selectedBeverage == null) {
             throw new IllegalArgumentException("No beverage is chosen");
         }
-
-        if (balance >= selectedBeverage.getPrice()) {
-            return balance - selectedBeverage.getPrice();
+        if (balance < selectedBeverage.getPrice()) {
+            throw new IllegalArgumentException(
+                    String.format("Insufficient funds, balance = %d, price of beverage = %d",
+                            balance, selectedBeverage.getPrice()));
         }
-        throw new IllegalArgumentException(
-                String.format("Insufficient funds, balance = %d, price of beverage = %d",
-                        balance, selectedBeverage.getPrice()));
+        balance -= selectedBeverage.getPrice();
+        return computeChange();
+    }
+
+    private List<Coin> computeChange() {
+        List<Coin> coins = new ArrayList<>();
+        while (balance > 0) {
+            if (balance >= 20) {
+                coins.add(Coin.TWENTY);
+                balance -= 20;
+            }
+            else if (balance >= 10) {
+                coins.add(Coin.TEN);
+                balance -= 10;
+            }
+            else if (balance >= 5) {
+                coins.add(Coin.FIVE);
+                balance -= 5;
+            }
+            else {
+                coins.add(Coin.ONE);
+                balance -= 1;
+            }
+        }
+        return coins;
     }
 }

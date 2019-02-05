@@ -14,11 +14,9 @@ public interface VendingMachine {
 
     Inventory getInventory();
 
-    List<Coin> returnChange();
-
     void reset();
 
     void chooseBeverage(Beverage beverage);
 
-    int completePurchase();
+    List<Coin> completePurchaseAndComputeChange();
 }

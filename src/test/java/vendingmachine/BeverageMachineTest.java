@@ -5,12 +5,15 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import java.util.Collections;
+import java.util.List;
+
+import static java.util.Arrays.asList;
 import static org.junit.Assert.*;
 
 public class BeverageMachineTest {
 
     private BeverageMachine machine;
-
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
@@ -47,7 +50,7 @@ public class BeverageMachineTest {
         machine.insertCoin(Coin.TEN);
         machine.chooseBeverage(Beverage.WATER);
 
-        assertEquals(0, machine.completePurchase());
+        assertEquals(Collections.emptyList(), machine.completePurchaseAndComputeChange());
     }
 
     @Test
@@ -55,7 +58,7 @@ public class BeverageMachineTest {
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("No beverage is chosen");
 
-        machine.completePurchase();
+        machine.completePurchaseAndComputeChange();
     }
 
     @Test
@@ -66,6 +69,36 @@ public class BeverageMachineTest {
         machine.insertCoin(Coin.ONE);
         machine.chooseBeverage(Beverage.WATER);
 
-        machine.completePurchase();
+        machine.completePurchaseAndComputeChange();
+    }
+
+    @Test
+    public void shouldReturnEmptyListIfBalanceEqualsPrice() {
+        machine.chooseBeverage(Beverage.WATER);
+        machine.insertCoin(Coin.TEN);
+
+        List<Coin> change = machine.completePurchaseAndComputeChange();
+
+        assertTrue(change.isEmpty());
+    }
+
+    @Test
+    public void shouldComputeChangeInCoinsGreedy() {
+        machine.chooseBeverage(Beverage.COKE);
+
+        machine.insertCoin(Coin.TWENTY);
+        machine.insertCoin(Coin.FIVE);
+
+        machine.insertCoin(Coin.TWENTY);
+        machine.insertCoin(Coin.FIVE);
+        machine.insertCoin(Coin.FIVE);
+        machine.insertCoin(Coin.FIVE);
+        machine.insertCoin(Coin.ONE);
+        machine.insertCoin(Coin.ONE);
+
+        List<Coin> coins = machine.completePurchaseAndComputeChange();
+
+        List<Coin> expected = asList(Coin.TWENTY, Coin.TEN, Coin.FIVE, Coin.ONE, Coin.ONE);
+        assertEquals(expected, coins);
     }
 }
