@@ -26,7 +26,7 @@ public class BeverageMachine implements VendingMachine {
 
     @Override
     public Inventory getInventory() {
-        return null;
+        return inventory;
     }
 
     @Override

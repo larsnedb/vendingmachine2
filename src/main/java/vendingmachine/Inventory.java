@@ -1,45 +1,35 @@
 package vendingmachine;
 
-public class Inventory {
+import java.util.HashMap;
+import java.util.Map;
 
-    private int numberOfWaters;
-    private int numberOfSodas;
-    private int numberOfBeers;
+class Inventory<T> {
 
+    private Map<T, Integer> inventory = new HashMap<>();
 
-    public int getNumberOfWaters() {
-        return numberOfWaters;
+    void addBeverage(T beverage) {
+        Integer count = inventory.getOrDefault(beverage, 0);
+        inventory.put(beverage, count + 1);
     }
 
-    public void addWater() {
-        numberOfWaters++;
+    int getNumberOfBeverages(T beverage) {
+        Integer numberInStock = inventory.get(beverage);
+        return numberInStock != null ? numberInStock : 0;
     }
 
-    public void removeWater() {
-        numberOfWaters--;
+    void reduceBeverage(T beverage) {
+        if (hasBeverageInStock(beverage)) {
+            Integer count = inventory.get(beverage);
+            inventory.put(beverage, count - 1);
+        }
     }
 
-    public int getNumberOfSodas() {
-        return numberOfSodas;
+    boolean hasBeverageInStock(T beverage) {
+        Integer numberOfBeverages = inventory.get(beverage);
+        return numberOfBeverages != null && numberOfBeverages > 0;
     }
 
-    public void addSoda() {
-        numberOfSodas++;
-    }
-
-    public void removeSoda() {
-        numberOfSodas--;
-    }
-
-    public int getNumberOfBeers() {
-        return numberOfBeers;
-    }
-
-    public void addBeer() {
-        numberOfBeers++;
-    }
-
-    public void removeBeer() {
-        numberOfBeers--;
+    void clear() {
+        inventory.clear();
     }
 }
