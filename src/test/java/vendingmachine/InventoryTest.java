@@ -62,8 +62,6 @@ public class InventoryTest {
 
         inventory.clear();
 
-        assertEquals(0, inventory.getNumberOfBeverages(Beverage.WATER));
-        assertEquals(0, inventory.getNumberOfBeverages(Beverage.COKE));
-        assertEquals(0, inventory.getNumberOfBeverages(Beverage.BEER));
+        assertTrue(inventory.getContents().isEmpty());
     }
 }

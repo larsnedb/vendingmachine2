@@ -101,4 +101,19 @@ public class BeverageMachineTest {
         List<Coin> expected = asList(Coin.TWENTY, Coin.TEN, Coin.FIVE, Coin.ONE, Coin.ONE);
         assertEquals(expected, coins);
     }
+
+    @Test
+    public void shouldResetMachineState() {
+        machine.chooseBeverage(Beverage.BEER);
+        machine.insertCoin(Coin.TEN);
+        machine.getInventory().addBeverage(Beverage.COKE);
+        machine.setState(State.ONGOING_TRANSACTION);
+
+        machine.reset();
+
+        assertNull(machine.getSelectedBeverage());
+        assertEquals(0, machine.getBalance());
+        assertEquals(Collections.emptyMap(), machine.getInventory().getContents());
+        assertEquals(State.IDLE, machine.getState());
+    }
 }

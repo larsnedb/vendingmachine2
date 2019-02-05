@@ -1,6 +1,5 @@
 package vendingmachine;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,16 +8,20 @@ public class BeverageMachine implements VendingMachine {
     private State state;
     private Beverage selectedBeverage;
     private int balance;
-    private Inventory inventory;
+    private Inventory<Beverage> inventory;
 
     BeverageMachine() {
         state = State.IDLE;
-        inventory = new Inventory();
+        inventory = new Inventory<>();
     }
 
     @Override
     public State getState() {
         return state;
+    }
+
+    void setState(State state) {
+        this.state = state;
     }
 
     @Override
@@ -32,7 +35,7 @@ public class BeverageMachine implements VendingMachine {
     }
 
     @Override
-    public Inventory getInventory() {
+    public Inventory<Beverage> getInventory() {
         return inventory;
     }
 
@@ -43,7 +46,10 @@ public class BeverageMachine implements VendingMachine {
 
     @Override
     public void reset() {
-
+        state = State.IDLE;
+        selectedBeverage = null;
+        balance = 0;
+        inventory.clear();
     }
 
     @Override
