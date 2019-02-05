@@ -9,9 +9,14 @@ public class BeverageMachine implements VendingMachine {
     private int balance;
     private Inventory inventory;
 
+    BeverageMachine() {
+        state = State.IDLE;
+        inventory = new Inventory();
+    }
+
     @Override
     public State getState() {
-        return null;
+        return state;
     }
 
     @Override
@@ -47,5 +52,10 @@ public class BeverageMachine implements VendingMachine {
     @Override
     public void chooseBeverage(Beverage beverage) {
         selectedBeverage = beverage;
+    }
+
+    @Override
+    public boolean completePurchase() {
+        return selectedBeverage != null && balance >= selectedBeverage.getPrice();
     }
 }

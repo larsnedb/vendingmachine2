@@ -19,4 +19,6 @@ public interface VendingMachine {
     void reset();
 
     void chooseBeverage(Beverage beverage);
+
+    boolean completePurchase();
 }

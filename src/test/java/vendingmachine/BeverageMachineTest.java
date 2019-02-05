@@ -35,4 +35,20 @@ public class BeverageMachineTest {
 
         assertEquals(Beverage.BEER, machine.getSelectedBeverage());
     }
+
+    @Test
+    public void shouldCompleteTransactionIfBalanceIsSufficient() {
+        machine.insertCoin(Coin.TEN);
+        machine.chooseBeverage(Beverage.WATER);
+
+        assertTrue(machine.completePurchase());
+    }
+
+    @Test
+    public void shouldThrowExceptionIfInsufficientBalance() {
+        machine.insertCoin(Coin.ONE);
+        machine.chooseBeverage(Beverage.WATER);
+
+        assertFalse(machine.completePurchase());
+    }
 }
