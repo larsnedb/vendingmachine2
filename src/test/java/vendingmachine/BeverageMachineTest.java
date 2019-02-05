@@ -1,13 +1,19 @@
 package vendingmachine;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.*;
 
 public class BeverageMachineTest {
 
     private BeverageMachine machine;
+
+
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
 
     @Before
     public void setUp() {
@@ -41,14 +47,25 @@ public class BeverageMachineTest {
         machine.insertCoin(Coin.TEN);
         machine.chooseBeverage(Beverage.WATER);
 
-        assertTrue(machine.completePurchase());
+        assertEquals(0, machine.completePurchase());
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenNoBeverageIsChosen() {
+        exception.expect(IllegalArgumentException.class);
+        exception.expectMessage("No beverage is chosen");
+
+        machine.completePurchase();
     }
 
     @Test
     public void shouldThrowExceptionIfInsufficientBalance() {
+        exception.expect(RuntimeException.class);
+        exception.expectMessage("Insufficient funds, balance = 1, price of beverage = 10");
+
         machine.insertCoin(Coin.ONE);
         machine.chooseBeverage(Beverage.WATER);
 
-        assertFalse(machine.completePurchase());
+        machine.completePurchase();
     }
 }

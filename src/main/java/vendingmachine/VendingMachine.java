@@ -20,5 +20,5 @@ public interface VendingMachine {
 
     void chooseBeverage(Beverage beverage);
 
-    boolean completePurchase();
+    int completePurchase();
 }

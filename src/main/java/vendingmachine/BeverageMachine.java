@@ -55,7 +55,16 @@ public class BeverageMachine implements VendingMachine {
     }
 
     @Override
-    public boolean completePurchase() {
-        return selectedBeverage != null && balance >= selectedBeverage.getPrice();
+    public int completePurchase() {
+        if (selectedBeverage == null) {
+            throw new IllegalArgumentException("No beverage is chosen");
+        }
+
+        if (balance >= selectedBeverage.getPrice()) {
+            return balance - selectedBeverage.getPrice();
+        }
+        throw new IllegalArgumentException(
+                String.format("Insufficient funds, balance = %d, price of beverage = %d",
+                        balance, selectedBeverage.getPrice()));
     }
 }
