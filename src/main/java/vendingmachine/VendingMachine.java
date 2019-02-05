@@ -19,4 +19,6 @@ public interface VendingMachine {
     void chooseBeverage(Beverage beverage);
 
     List<Coin> completePurchaseAndComputeChange();
+
+    List<Coin> cancel();
 }

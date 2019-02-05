@@ -71,6 +71,11 @@ public class BeverageMachine implements VendingMachine {
         return computeChange();
     }
 
+    @Override
+    public List<Coin> cancel() {
+        return computeChange();
+    }
+
     private List<Coin> computeChange() {
         List<Coin> coins = new ArrayList<>();
         while (balance > 0) {

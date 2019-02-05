@@ -73,7 +73,7 @@ public class BeverageMachineTest {
     }
 
     @Test
-    public void shouldReturnEmptyListIfBalanceEqualsPrice() {
+    public void shouldReturnEmptyListOfCoinsIfBalanceEqualsPrice() {
         machine.chooseBeverage(Beverage.WATER);
         machine.insertCoin(Coin.TEN);
 
@@ -106,7 +106,7 @@ public class BeverageMachineTest {
     public void shouldResetMachineState() {
         machine.chooseBeverage(Beverage.BEER);
         machine.insertCoin(Coin.TEN);
-        machine.getInventory().addBeverage(Beverage.COKE);
+        machine.getInventory().addItem(Beverage.COKE);
         machine.setState(State.ONGOING_TRANSACTION);
 
         machine.reset();
@@ -115,5 +115,24 @@ public class BeverageMachineTest {
         assertEquals(0, machine.getBalance());
         assertEquals(Collections.emptyMap(), machine.getInventory().getContents());
         assertEquals(State.IDLE, machine.getState());
+    }
+
+
+    @Test
+    public void shouldReturnEmptyListIfCancelAndNoBalance() {
+        List<Coin> change = machine.cancel();
+
+        assertEquals(change, Collections.emptyList());
+    }
+
+    @Test
+    public void shouldRefundBalanceIfTransactionCancelled() {
+        machine.insertCoin(Coin.FIVE);
+        machine.insertCoin(Coin.FIVE);
+        machine.insertCoin(Coin.FIVE);
+
+        List<Coin> change = machine.cancel();
+
+        assertEquals(asList(Coin.TEN, Coin.FIVE), change);
     }
 }
