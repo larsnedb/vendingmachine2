@@ -16,49 +16,49 @@ public class InventoryTest {
 
     @Test
     public void shouldReturnTrueIfBeverageInStock() {
-        inventory.addBeverage(Beverage.WATER);
+        inventory.addItem(Beverage.WATER);
 
-        assertFalse(inventory.hasBeverageInStock(Beverage.BEER));
-        assertTrue(inventory.hasBeverageInStock(Beverage.WATER));
+        assertFalse(inventory.hasItemInStock(Beverage.BEER));
+        assertTrue(inventory.hasItemInStock(Beverage.WATER));
     }
 
     @Test
     public void shouldReturnFalseIfBeverageNotInStock() {
-        assertFalse(inventory.hasBeverageInStock(Beverage.BEER));
+        assertFalse(inventory.hasItemInStock(Beverage.BEER));
     }
 
     @Test
     public void shouldReturnNumberOfBeveragesInStock() {
-        inventory.addBeverage(Beverage.COKE);
-        inventory.addBeverage(Beverage.COKE);
-        inventory.addBeverage(Beverage.COKE);
+        inventory.addItem(Beverage.COKE);
+        inventory.addItem(Beverage.COKE);
+        inventory.addItem(Beverage.COKE);
 
-        assertEquals(3, inventory.getNumberOfBeverages(Beverage.COKE));
+        assertEquals(3, inventory.getNumberOfItems(Beverage.COKE));
     }
 
     @Test
     public void shouldReduceNumberOfBeverages() {
         Beverage beverage = Beverage.COKE;
 
-        inventory.addBeverage(beverage);
-        inventory.addBeverage(beverage);
+        inventory.addItem(beverage);
+        inventory.addItem(beverage);
 
-        assertEquals(2, inventory.getNumberOfBeverages(beverage));
+        assertEquals(2, inventory.getNumberOfItems(beverage));
 
-        inventory.reduceBeverage(beverage);
-        assertEquals(1, inventory.getNumberOfBeverages(beverage));
+        inventory.subtractItem(beverage);
+        assertEquals(1, inventory.getNumberOfItems(beverage));
     }
 
     @Test
     public void shouldClearInventory() {
-        inventory.addBeverage(Beverage.WATER);
-        inventory.addBeverage(Beverage.COKE);
-        inventory.addBeverage(Beverage.COKE);
-        inventory.addBeverage(Beverage.BEER);
+        inventory.addItem(Beverage.WATER);
+        inventory.addItem(Beverage.COKE);
+        inventory.addItem(Beverage.COKE);
+        inventory.addItem(Beverage.BEER);
 
-        assertEquals(1, inventory.getNumberOfBeverages(Beverage.WATER));
-        assertEquals(2, inventory.getNumberOfBeverages(Beverage.COKE));
-        assertEquals(1, inventory.getNumberOfBeverages(Beverage.BEER));
+        assertEquals(1, inventory.getNumberOfItems(Beverage.WATER));
+        assertEquals(2, inventory.getNumberOfItems(Beverage.COKE));
+        assertEquals(1, inventory.getNumberOfItems(Beverage.BEER));
 
         inventory.clear();
 
